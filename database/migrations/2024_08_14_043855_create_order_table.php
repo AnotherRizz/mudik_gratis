@@ -20,9 +20,10 @@ return new class extends Migration
             $table->string('no_kursi');
             $table->string('nomor_bus');
             $table->foreignId('tujuan_id')->constrained('tujuan')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->enum('status', ['menunggu konfirmasi', 'terkonfirmasi'])->default('menunggu konfirmasi'); // Tambahkan kolom status dengan nilai default
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('order');
     }
 };

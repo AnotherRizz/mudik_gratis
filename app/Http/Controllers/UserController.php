@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tujuan;
-use App\Models\User;
+use App\Models\Order;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,9 +26,14 @@ class UserController extends Controller
     return view('user.profile', compact('user'));
     }
    
-    public function show(string $id)
+    public function tiket()
     {
-        //
+         // Ambil data pesanan dari user yang sedang login
+         $orders = Order::where('user_id', auth()->id())->with('tujuan')->get();
+
+
+    // Kembalikan ke view tiket dengan data pesanan
+    return view('user.tiket', compact('orders'));
     }
 
     /**

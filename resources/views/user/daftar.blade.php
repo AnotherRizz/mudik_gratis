@@ -32,6 +32,15 @@
 </style>
 
 <body>
+    @if (session('alert'))
+    <script>
+        Swal.fire({
+            title: '{{ session('alert.title') }}',
+            text: '{{ session('alert.text') }}',
+            icon: '{{ session('alert.icon') }}',
+        });
+    </script>
+@endif
     <main class="h-screen bg-gradient-to-b from-sky-500 to-slate-50">
         <div class="w-full max-w-3xl h-fit p-4 shadow-sm mx-auto bg-sky-500">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -89,21 +98,22 @@
             <div class="w-full p-5 bg-white">
                 <form action="{{ route('orders.store') }}" method="POST" class="grid grid-cols-3 gap-4">
                     @csrf
-
-             
+                
+                    <!-- Hidden Inputs -->
                     <input type="hidden" name="nomor_bus" id="nomor_bus" value="{{ $selectedBus->nomor_bus ?? '' }}">
                     <input type="hidden" name="tujuan_id" id="tujuan_id" value="{{ $selectedBus->tujuan_id ?? '' }}">
                     <input type="hidden" value="" id="kursi" name="no_kursi">
+                
                     <!-- Nama -->
                     <div class="mb-4">
                         <label for="name" class="block text-gray-700 font-bold text-sm">Nama Pendaftar</label>
-                        <input type="text" id="name" name="name"
+                        <input type="text" id="name" name="name" 
                             class="w-full font-semibold text-sm px-3 py-2 border rounded-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent @error('name') border-red-500 @enderror">
                         @error('name')
                             <span class="text-red-500 text-xs font-bold">{{ $message }}</span>
                         @enderror
                     </div>
-
+                
                     <!-- Telepon -->
                     <div class="mb-4">
                         <label for="no_telp" class="block text-gray-700 font-bold text-sm">Telepon</label>
@@ -113,7 +123,7 @@
                             <span class="text-red-500 text-xs font-bold">{{ $message }}</span>
                         @enderror
                     </div>
-
+                
                     <!-- Email -->
                     <div class="mb-4">
                         <label for="email" class="block text-gray-700 font-bold text-sm">Email</label>
@@ -123,7 +133,7 @@
                             <span class="text-red-500 text-xs font-bold">{{ $message }}</span>
                         @enderror
                     </div>
-
+                
                     <!-- Alamat -->
                     <div class="mb-4">
                         <label for="alamat" class="block text-gray-700 font-bold text-sm">Alamat</label>
@@ -133,13 +143,14 @@
                             <span class="text-red-500 text-xs font-bold">{{ $message }}</span>
                         @enderror
                     </div>
-
+                
                     <!-- Submit Button -->
                     <div class="col-span-2 text-center">
                         <button type="submit"
                             class="px-6 py-2 bg-sky-500 text-white rounded-sm shadow-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50">Submit</button>
                     </div>
                 </form>
+                
             </div>
         </div>
     </main>

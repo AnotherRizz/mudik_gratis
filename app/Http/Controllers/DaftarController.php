@@ -15,6 +15,7 @@ class DaftarController extends Controller
         $busList = Bus::all();
         $kursis = collect();
         $selectedBus = null;
+       
     
         if ($request->has('bus')) {
             $selectedBusId = $request->input('bus');

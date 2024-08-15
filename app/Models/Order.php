@@ -11,12 +11,14 @@ class Order extends Model
 
     protected $fillable = [
         'name',
-        'alamat', // Sesuaikan dengan nama field di form
+        'alamat', 
         'email',
-        'no_telp', // Sesuaikan dengan nama field di form
+        'no_telp', 
         'no_kursi',
         'nomor_bus',
         'tujuan_id',
+        'user_id',
+        'status' // Tambahkan user_id
     ];
 
     protected $casts = [
@@ -27,5 +29,10 @@ class Order extends Model
     public function tujuan()
     {
         return $this->belongsTo(Tujuan::class, 'tujuan_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

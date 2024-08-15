@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Kursi;
 
 class OrderController extends Controller
 {
@@ -39,6 +41,8 @@ class OrderController extends Controller
             'no_kursi' => $request->input('no_kursi'),
             'nomor_bus' => $request->input('nomor_bus'),
             'tujuan_id' => $request->input('tujuan_id'),
+            'user_id' => Auth::id(), // Ambil user_id dari Auth::id() bukan dari input form
+            'status'=> 'menunggu konfirmasi',
         ];
     
         // Log data yang akan disimpan
@@ -46,9 +50,20 @@ class OrderController extends Controller
     
         // Simpan data ke database
         Order::create($data);
+        $kursi = Kursi::where('nomor_kursi', $request->input('no_kursi'))->first();
+        if ($kursi) {
+            $kursi->status = 'terisi';
+            $kursi->save();
+        }
     
         // Redirect kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Order created successfully!');
+        return redirect()->intended('/')->with('alert', [
+            'title' => 'Berhasil!',
+            'text' => 'Berhasil order',
+            'icon' => 'success',
+
+        ]);
     }
+    
     
 }

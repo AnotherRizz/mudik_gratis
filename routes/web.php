@@ -16,6 +16,7 @@ Route::get('/', [UserController::class, 'index'])->name('message');
 
 Route::middleware(['auth'])->group(function () {
    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+   Route::get('/tiket', [UserController::class, 'tiket'])->name('tiket');
    Route::get('/daftar', [DaftarController::class, 'index'])->name('daftar');
    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 });
